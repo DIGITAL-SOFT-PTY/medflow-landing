@@ -21,6 +21,8 @@ export default function MedFlowLanding() {
   const [demoName, setDemoName] = useState('');
   const [demoPhone, setDemoPhone] = useState('');
   const [clinicName, setClinicName] = useState('');
+  const [showBanner, setShowBanner] = useState(true);
+  const [patientsPerDay, setPatientsPerDay] = useState(20);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -85,6 +87,14 @@ export default function MedFlowLanding() {
 
       {/* NAVBAR */}
       <nav className="fixed top-0 w-full bg-white border-b border-teal-100 shadow-sm z-50">
+        {showBanner && (
+          <div className="bg-gradient-to-r from-teal-600 to-teal-700 text-white text-center py-2 px-10 text-sm font-medium relative">
+            🎉 Oferta de lanzamiento — <span className="font-bold">30% off los primeros 3 meses</span> · Termina el 30 Abr
+            <button onClick={() => setShowBanner(false)} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white">
+              <X size={14} />
+            </button>
+          </div>
+        )}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection('hero')}>
             {/* Logo con cruz médica */}
@@ -167,7 +177,7 @@ export default function MedFlowLanding() {
       </nav>
 
       {/* HERO */}
-      <section id="hero" className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-teal-50 via-white to-cyan-50">
+      <section id="hero" className={`${showBanner ? 'pt-36' : 'pt-28'} pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-teal-50 via-white to-cyan-50`}>
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-14 items-center">
             {/* Left */}
@@ -234,7 +244,7 @@ export default function MedFlowLanding() {
                     <Stethoscope className="w-5 h-5" />
                     <span>Panel Clínico — Hoy</span>
                   </div>
-                  <span className="text-teal-200 text-sm">Martes, 1 Abr 2025</span>
+                  <span className="text-teal-200 text-sm">{new Date().toLocaleDateString('es-PA', { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' })}</span>
                 </div>
 
                 <div className="p-5 space-y-5">
@@ -301,6 +311,38 @@ export default function MedFlowLanding() {
               <div key={i}>
                 <p className="text-2xl md:text-3xl font-black text-teal-400">{stat.value}</p>
                 <p className="text-gray-400 text-sm mt-1">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CÓMO FUNCIONA */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
+              Proceso simple
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
+              Empieza en 3 pasos
+            </h2>
+            <p className="text-xl text-gray-500">Sin instalaciones. Sin técnicos. Sin complicaciones.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-0.5 bg-teal-100 z-0" />
+            {[
+              { step: '01', icon: '🏥', title: 'Crea tu cuenta', desc: 'Regístrate con tu email en menos de 2 minutos. Sin tarjeta de crédito requerida.' },
+              { step: '02', icon: '👥', title: 'Carga tus pacientes', desc: 'Importa desde Excel o agrega pacientes manualmente. Nuestro equipo te asiste.' },
+              { step: '03', icon: '🚀', title: 'Gestiona todo', desc: 'Agenda, cobros, historial y reportes listos desde el primer día.' },
+            ].map((item, i) => (
+              <div key={i} className="relative z-10 flex flex-col items-center text-center bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-lg hover:border-teal-200 transition">
+                <div className="w-14 h-14 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                  {item.icon}
+                </div>
+                <span className="text-xs font-black text-teal-400 tracking-widest mb-2">PASO {item.step}</span>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -456,6 +498,128 @@ export default function MedFlowLanding() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* COMPARACIÓN */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
+              Comparación
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
+              MedFlow vs otras opciones
+            </h2>
+            <p className="text-xl text-gray-500">No todas las soluciones son iguales.</p>
+          </div>
+          <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-lg">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 border-b border-gray-100">
+                  <th className="text-left px-6 py-4 font-bold text-gray-700">Función</th>
+                  <th className="px-6 py-4 text-center">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-600 text-white rounded-full text-xs font-bold">⭐ MedFlow</span>
+                  </th>
+                  <th className="px-6 py-4 text-center font-semibold text-gray-500">Excel</th>
+                  <th className="px-6 py-4 text-center font-semibold text-gray-500">Software tradicional</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Agenda digital inteligente', true, false, 'partial'],
+                  ['Recordatorios automáticos', true, false, 'partial'],
+                  ['Historial clínico digital', true, 'partial', true],
+                  ['Cobros y recibos', true, 'partial', 'partial'],
+                  ['Reportes en tiempo real', true, false, 'partial'],
+                  ['Soporte en español 24/7', true, false, false],
+                  ['Implementación en 5 min', true, true, false],
+                  ['Precio mensual', '$29', 'Gratis', '$200+'],
+                ].map(([feature, medflow, excel, trad], i) => {
+                  const render = (val) => {
+                    if (val === true) return <span className="text-teal-500 text-lg">✓</span>;
+                    if (val === false) return <span className="text-red-400 text-lg">✗</span>;
+                    if (val === 'partial') return <span className="text-yellow-500 text-lg">◐</span>;
+                    return <span className="font-bold text-gray-700">{val}</span>;
+                  };
+                  return (
+                    <tr key={i} className={`border-b border-gray-50 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}>
+                      <td className="px-6 py-4 text-gray-700 font-medium">{feature}</td>
+                      <td className="px-6 py-4 text-center bg-teal-50/30">{render(medflow)}</td>
+                      <td className="px-6 py-4 text-center">{render(excel)}</td>
+                      <td className="px-6 py-4 text-center">{render(trad)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-center text-xs text-gray-400 mt-4">◐ Funcionalidad parcial o requiere configuración avanzada</p>
+        </div>
+      </section>
+
+      {/* CALCULADORA ROI */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-teal-50 to-cyan-50">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-10">
+            <span className="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
+              Calculadora ROI
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
+              ¿Cuánto ganarías con MedFlow?
+            </h2>
+            <p className="text-xl text-gray-500">Mueve el slider y descubre el impacto real en tu clínica.</p>
+          </div>
+          <div className="bg-white rounded-2xl p-8 shadow-xl border border-teal-100">
+            <div className="mb-8">
+              <div className="flex justify-between items-center mb-3">
+                <label className="font-semibold text-gray-700">Pacientes que atiendes por día</label>
+                <span className="text-3xl font-black text-teal-600">{patientsPerDay}</span>
+              </div>
+              <input
+                type="range" min="1" max="80" value={patientsPerDay}
+                onChange={(e) => setPatientsPerDay(Number(e.target.value))}
+                className="w-full accent-teal-600 h-2 rounded-lg cursor-pointer"
+              />
+              <div className="flex justify-between text-xs text-gray-400 mt-1"><span>1</span><span>80</span></div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {[
+                {
+                  label: 'Horas ahorradas al mes',
+                  value: `${Math.round(patientsPerDay * 6 * 22 / 60)}h`,
+                  sub: 'en tareas administrativas',
+                  color: 'teal',
+                },
+                {
+                  label: 'Citas extra posibles',
+                  value: `+${Math.round(patientsPerDay * 6 * 22 / 60 / 0.5)}`,
+                  sub: 'consultas adicionales/mes',
+                  color: 'green',
+                },
+                {
+                  label: 'Ingreso extra estimado',
+                  value: `$${(Math.round(patientsPerDay * 6 * 22 / 60 / 0.5) * 45).toLocaleString()}`,
+                  sub: 'por mes (avg $45/consulta)',
+                  color: 'blue',
+                },
+              ].map((stat, i) => (
+                <div key={i} className={`rounded-xl p-5 text-center border ${
+                  stat.color === 'teal' ? 'bg-teal-50 border-teal-100' :
+                  stat.color === 'green' ? 'bg-green-50 border-green-100' :
+                  'bg-blue-50 border-blue-100'
+                }`}>
+                  <p className={`text-2xl font-black mb-1 ${
+                    stat.color === 'teal' ? 'text-teal-700' :
+                    stat.color === 'green' ? 'text-green-700' : 'text-blue-700'
+                  }`}>{stat.value}</p>
+                  <p className="font-semibold text-gray-800 text-sm">{stat.label}</p>
+                  <p className="text-xs text-gray-500 mt-1">{stat.sub}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-xs text-gray-400 mt-6">* Estimación basada en reducción del 75% del tiempo administrativo promedio.</p>
           </div>
         </div>
       </section>
@@ -705,7 +869,7 @@ export default function MedFlowLanding() {
                 <span className="text-3xl font-black text-gray-900">Personalizado</span>
               </div>
               <button
-                onClick={() => alert('Contacta a: +507 600-1234 o info@medflow.com')}
+                onClick={() => alert('Contacta a: +507 6277-4449 o digitalsoft507@gmail.com')}
                 className="w-full py-3 bg-gray-100 text-gray-800 font-bold rounded-xl hover:bg-gray-200 transition mb-7 cursor-pointer"
               >
                 Contactar Ventas
@@ -731,6 +895,41 @@ export default function MedFlowLanding() {
           <p className="text-center text-gray-500 mt-10 text-sm">
             Todos los planes incluyen 14 días de prueba gratis · Cancela cuando quieras · Sin cargos ocultos
           </p>
+        </div>
+      </section>
+
+      {/* PAÍSES */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">
+              Presente en toda Latinoamérica
+            </h2>
+            <p className="text-gray-500">Clínicas activas en 10 países y creciendo.</p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {[
+              { code: 'pa', country: 'Panamá' },
+              { code: 'co', country: 'Colombia' },
+              { code: 'mx', country: 'México' },
+              { code: 'cr', country: 'Costa Rica' },
+              { code: 'gt', country: 'Guatemala' },
+              { code: 'sv', country: 'El Salvador' },
+              { code: 'hn', country: 'Honduras' },
+              { code: 'do', country: 'Rep. Dominicana' },
+              { code: 'ec', country: 'Ecuador' },
+              { code: 'pe', country: 'Perú' },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col items-center gap-2 p-4 bg-white rounded-xl border border-gray-100 hover:border-teal-300 hover:shadow-md transition">
+                <img
+                  src={`https://flagcdn.com/w80/${item.code}.png`}
+                  alt={`Bandera de ${item.country}`}
+                  className="w-14 h-9 object-cover rounded shadow-sm"
+                />
+                <span className="text-sm font-semibold text-gray-700 text-center">{item.country}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -808,8 +1007,13 @@ export default function MedFlowLanding() {
               };
               return (
                 <div key={i} className="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:shadow-lg hover:border-teal-200 transition text-center">
-                  <div className={`w-16 h-16 ${colorMap[member.color]} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md`}>
-                    <span className="text-white font-black text-xl">{member.initials}</span>
+                  <div className={`w-20 h-20 ${colorMap[member.color]} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg relative overflow-hidden`}>
+                    {/* Silueta de cara */}
+                    <svg viewBox="0 0 80 80" className="absolute inset-0 w-full h-full" fill="white" fillOpacity="0.15">
+                      <circle cx="40" cy="27" r="13" />
+                      <ellipse cx="40" cy="70" rx="22" ry="16" />
+                    </svg>
+                    <span className="relative z-10 text-white font-black text-xl tracking-wide">{member.initials}</span>
                   </div>
                   <h3 className="font-bold text-gray-900 mb-0.5">{member.name}</h3>
                   <p className="text-teal-600 text-xs font-semibold uppercase tracking-wide mb-3">{member.title}</p>
@@ -898,7 +1102,7 @@ export default function MedFlowLanding() {
               <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wide">Empresa</h4>
               <ul className="space-y-2 text-sm">
                 <li><a href="#" className="hover:text-white transition">Sobre nosotros</a></li>
-                <li><button onClick={() => alert('Contacto: +507 600-1234')} className="hover:text-white transition">Contacto</button></li>
+                <li><button onClick={() => alert('Contacto: +507 6277-4449')} className="hover:text-white transition">Contacto</button></li>
                 <li><a href="#" className="hover:text-white transition">Términos</a></li>
                 <li><a href="#" className="hover:text-white transition">Privacidad</a></li>
               </ul>
@@ -914,7 +1118,7 @@ export default function MedFlowLanding() {
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-teal-500" />
-                  <button onClick={() => alert('Llamar a: +507 600-1234')} className="hover:text-white transition">+507 600-1234</button>
+                  <button onClick={() => alert('Llamar a: +507 6277-4449')} className="hover:text-white transition">+507 6277-4449</button>
                 </li>
               </ul>
             </div>
@@ -1051,6 +1255,19 @@ export default function MedFlowLanding() {
           </div>
         </div>
       )}
+
+      {/* WHATSAPP FLOTANTE */}
+      <a
+        href="https://wa.me/50762774449?text=Hola%2C%20me%20interesa%20conocer%20MedFlow"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-xl flex items-center justify-center transition-transform hover:scale-110"
+        aria-label="Contactar por WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" className="w-7 h-7 fill-current">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </a>
     </div>
   );
 }
