@@ -1,3 +1,4 @@
+import emailjs from '@emailjs/browser';
 import React, { useState } from 'react';
 import {
   Check, Users, Calendar, DollarSign, BarChart3, Phone, Mail,
@@ -15,6 +16,11 @@ export default function MedFlowLanding() {
   const [showDemoModal, setShowDemoModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [demoName, setDemoName] = useState('');
+  const [demoPhone, setDemoPhone] = useState('');
+  const [clinicName, setClinicName] = useState('');
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -24,30 +30,54 @@ export default function MedFlowLanding() {
     }
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    if (signupEmail) {
-      setSubmitStatus('success');
-      setSignupEmail('');
+    setIsLoading(true); setErrorMessage('');
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        { from_email: signupEmail, clinic_name: clinicName || 'No especificado',
+          form_type: 'Signup — Crear Cuenta', reply_to: signupEmail },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+      setSubmitStatus('success'); setSignupEmail(''); setClinicName('');
       setTimeout(() => setShowSignupModal(false), 2000);
-    }
+    } catch { setErrorMessage('Hubo un error al enviar. Intenta de nuevo.'); }
+    finally { setIsLoading(false); }
   };
 
-  const handleDemoRequest = (e) => {
+  const handleDemoRequest = async (e) => {
     e.preventDefault();
-    if (demoEmail) {
-      setSubmitStatus('demo');
-      setDemoEmail('');
+    setIsLoading(true); setErrorMessage('');
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_DEMO_ID,
+        { from_name: demoName, from_email: demoEmail,
+          phone: demoPhone || 'No proporcionado', reply_to: demoEmail },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+      setSubmitStatus('demo'); setDemoEmail(''); setDemoName(''); setDemoPhone('');
       setTimeout(() => setShowDemoModal(false), 2000);
-    }
+    } catch { setErrorMessage('Hubo un error al enviar. Intenta de nuevo.'); }
+    finally { setIsLoading(false); }
   };
 
-  const handleFinalCTA = (e) => {
+  const handleFinalCTA = async (e) => {
     e.preventDefault();
-    if (email) {
-      alert(`¡Perfecto! Te enviaremos un link para comenzar a: ${email}`);
-      setEmail('');
-    }
+    setIsLoading(true); setErrorMessage('');
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        { from_email: email, clinic_name: 'No especificado',
+          form_type: 'CTA Final — Comenzar Ahora', reply_to: email },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+      setEmail(''); setSubmitStatus('cta-success');
+    } catch { setErrorMessage('Hubo un error. Por favor intenta de nuevo.'); }
+    finally { setIsLoading(false); }
   };
 
   return (
@@ -100,7 +130,7 @@ export default function MedFlowLanding() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-gray-700 p-1"
+            className="md:hidden text-gray-700 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -147,7 +177,7 @@ export default function MedFlowLanding() {
                 Solución N°1 para clínicas en Latinoamérica
               </div>
 
-              <h1 className="text-5xl md:text-6xl font-black text-gray-900 leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 leading-tight">
                 El sistema que tu clínica merece
               </h1>
 
@@ -194,8 +224,8 @@ export default function MedFlowLanding() {
             {/* Right - Clinical Dashboard Preview */}
             <div className="relative">
               {/* Decorative ring */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-teal-100 rounded-full opacity-60"></div>
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-cyan-100 rounded-full opacity-60"></div>
+              <div className="hidden sm:block absolute -top-4 -right-4 w-24 h-24 bg-teal-100 rounded-full opacity-60"></div>
+              <div className="hidden sm:block absolute -bottom-4 -left-4 w-16 h-16 bg-cyan-100 rounded-full opacity-60"></div>
 
               <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
                 {/* Cabecera del panel */}
@@ -229,9 +259,9 @@ export default function MedFlowLanding() {
                     <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Próximas citas</p>
                     <div className="space-y-2">
                       {[
-                        { name: 'Juan Pérez', type: 'Consulta General', time: '10:00', color: 'teal' },
-                        { name: 'María González', type: 'Control Cardiológico', time: '11:30', color: 'green' },
-                        { name: 'Carlos López', type: 'Primera Cita', time: '14:00', color: 'orange' },
+                        { name: 'Clínica San Miguel', type: 'Pediatría', time: '10:00', color: 'teal' },
+                        { name: 'Clínica Dental Plus', type: 'Odontología', time: '11:30', color: 'green' },
+                        { name: 'Centro Médico Aurora', type: 'Medicina General', time: '14:00', color: 'orange' },
                       ].map((appt, i) => (
                         <div key={i} className={`flex items-center justify-between p-3 rounded-lg border-l-4 ${
                           appt.color === 'teal' ? 'bg-teal-50 border-teal-500' :
@@ -322,7 +352,7 @@ export default function MedFlowLanding() {
             <p className="text-xl text-gray-500">Cada día en tu clínica, nosotros los eliminamos.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 icon: <ClipboardList className="w-8 h-8 text-red-500" />,
@@ -443,7 +473,7 @@ export default function MedFlowLanding() {
             <p className="text-gray-400 text-lg">Clínicas reales que transformaron su operación.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 emoji: '👨‍⚕️',
@@ -525,7 +555,7 @@ export default function MedFlowLanding() {
             </div>
 
             {/* PLAN 2 - DESTACADO */}
-            <div className="bg-gradient-to-b from-teal-600 to-teal-700 rounded-2xl p-8 shadow-2xl scale-105 text-white">
+            <div className="bg-gradient-to-b from-teal-600 to-teal-700 rounded-2xl p-8 shadow-2xl md:scale-105 text-white">
               <div className="inline-block mb-4 px-3 py-1 bg-white/20 text-white rounded-full text-xs font-bold">
                 MÁS POPULAR
               </div>
@@ -667,11 +697,20 @@ export default function MedFlowLanding() {
             />
             <button
               type="submit"
-              className="px-7 py-3 bg-white text-teal-700 font-bold rounded-lg hover:bg-teal-50 transition whitespace-nowrap cursor-pointer"
+              disabled={isLoading}
+              className="px-7 py-3 bg-white text-teal-700 font-bold rounded-lg hover:bg-teal-50 transition whitespace-nowrap cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Comenzar Ahora
+              {isLoading ? 'Enviando...' : 'Comenzar Ahora'}
             </button>
           </form>
+
+          {errorMessage && <p className="text-red-300 text-center mt-3 text-sm">{errorMessage}</p>}
+
+          {submitStatus === 'cta-success' && (
+            <p className="text-white text-center mt-4 font-semibold">
+              ¡Perfecto! Te enviaremos un link para comenzar en breve.
+            </p>
+          )}
 
           <p className="text-teal-200 text-sm mt-5">
             Sin tarjeta de crédito · Acceso completo por 14 días · Cancela cuando quieras
@@ -682,9 +721,9 @@ export default function MedFlowLanding() {
       {/* FOOTER */}
       <footer className="bg-gray-950 text-gray-400 py-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-5 gap-8 mb-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 mb-10">
             {/* Branding */}
-            <div className="md:col-span-2">
+            <div className="col-span-2 sm:col-span-3 md:col-span-2">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-9 h-9 bg-teal-600 rounded-lg flex items-center justify-center">
                   <Plus className="w-5 h-5 text-white" strokeWidth={3} />
@@ -750,7 +789,7 @@ export default function MedFlowLanding() {
       {/* MODAL - SIGNUP */}
       {showSignupModal && (
         <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center">
                 <Plus className="w-5 h-5 text-teal-600" strokeWidth={3} />
@@ -773,22 +812,27 @@ export default function MedFlowLanding() {
               <input
                 type="text"
                 placeholder="Nombre de tu clínica"
+                value={clinicName}
+                onChange={(e) => setClinicName(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 text-sm"
               />
               <button
                 type="submit"
-                className="w-full py-3 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition cursor-pointer"
+                disabled={isLoading}
+                className="w-full py-3 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Crear Cuenta
+                {isLoading ? 'Enviando...' : 'Crear Cuenta'}
               </button>
             </form>
+
+            {errorMessage && <p className="text-red-600 text-center mt-3 text-sm">{errorMessage}</p>}
 
             {submitStatus === 'success' && (
               <p className="text-teal-600 text-center mt-4 font-semibold">¡Revisa tu email para continuar!</p>
             )}
 
             <button
-              onClick={() => setShowSignupModal(false)}
+              onClick={() => { setShowSignupModal(false); setErrorMessage(''); setSubmitStatus(null); }}
               className="mt-4 w-full text-gray-400 hover:text-gray-700 font-medium text-sm transition"
             >
               Cerrar
@@ -800,7 +844,7 @@ export default function MedFlowLanding() {
       {/* MODAL - DEMO */}
       {showDemoModal && (
         <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center">
                 <Stethoscope className="w-5 h-5 text-teal-600" />
@@ -815,6 +859,8 @@ export default function MedFlowLanding() {
               <input
                 type="text"
                 placeholder="Tu nombre completo"
+                value={demoName}
+                onChange={(e) => setDemoName(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 text-sm"
                 required
               />
@@ -829,22 +875,27 @@ export default function MedFlowLanding() {
               <input
                 type="tel"
                 placeholder="+507 ____-____"
+                value={demoPhone}
+                onChange={(e) => setDemoPhone(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 text-sm"
               />
               <button
                 type="submit"
-                className="w-full py-3 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition cursor-pointer"
+                disabled={isLoading}
+                className="w-full py-3 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Confirmar Demo
+                {isLoading ? 'Enviando...' : 'Confirmar Demo'}
               </button>
             </form>
+
+            {errorMessage && <p className="text-red-600 text-center mt-3 text-sm">{errorMessage}</p>}
 
             {submitStatus === 'demo' && (
               <p className="text-teal-600 text-center mt-4 font-semibold">¡Te contactaremos pronto!</p>
             )}
 
             <button
-              onClick={() => setShowDemoModal(false)}
+              onClick={() => { setShowDemoModal(false); setErrorMessage(''); setSubmitStatus(null); }}
               className="mt-4 w-full text-gray-400 hover:text-gray-700 font-medium text-sm transition"
             >
               Cerrar
