@@ -99,7 +99,7 @@ export default function MedFlowLanding() {
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection('hero')}>
             {/* Logo con cruz médica */}
             <div className="w-11 h-11 bg-gradient-to-br from-teal-500 to-teal-700 rounded-xl flex items-center justify-center shadow-md">
-              <Plus className="w-6 h-6 text-white" strokeWidth={3} />
+              <Activity className="w-6 h-6 text-white" strokeWidth={2} />
             </div>
             <div>
               <div className="font-bold text-xl text-gray-900 leading-tight">MedFlow</div>
