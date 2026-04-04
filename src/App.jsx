@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import {
   Check, Users, Calendar, DollarSign, BarChart3, Phone, Mail,
   ArrowRight, Menu, X, Stethoscope, Heart, Activity, ClipboardList,
-  Shield, FileText, Clock, Zap, Plus, Activity
+  Shield, FileText, Clock, Zap, Plus
 } from 'lucide-react';
 
 const APP_VERSION = '0.1.0';
