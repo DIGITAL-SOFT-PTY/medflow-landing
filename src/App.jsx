@@ -103,7 +103,7 @@ export default function MedFlowLanding() {
             </div>
             <div>
               <div className="font-bold text-xl text-gray-900 leading-tight">MedFlow</div>
-              <div className="text-xs text-teal-600 font-semibold tracking-wide">GESTIÓN CLÍNICA</div>
+              <div className="text-xs text-teal-600 font-semibold tracking-wide">GESTIÓN DE CLÍNICAS</div>
             </div>
           </div>
 
@@ -1078,7 +1078,7 @@ export default function MedFlowLanding() {
             <div className="col-span-2 sm:col-span-3 md:col-span-2">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-9 h-9 bg-teal-600 rounded-lg flex items-center justify-center">
-                  <Plus className="w-5 h-5 text-white" strokeWidth={3} />
+                  <Activity className="w-6 h-6 text-white" strokeWidth={2} />
                 </div>
                 <span className="font-bold text-white text-lg">MedFlow</span>
               </div>
