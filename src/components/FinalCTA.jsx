@@ -81,7 +81,15 @@ export default function FinalCTA() {
             disabled={isLoading}
             className="w-full py-3.5 bg-white text-teal-700 font-bold text-lg rounded-lg hover:bg-teal-50 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {isLoading ? 'Enviando...' : 'Comenzar Gratis Ahora'}
+            {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+              </svg>
+              Enviando...
+            </span>
+          ) : 'Comenzar Gratis Ahora'}
           </button>
         </form>
 

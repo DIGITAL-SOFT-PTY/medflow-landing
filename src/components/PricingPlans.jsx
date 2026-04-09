@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Check, Shield } from 'lucide-react';
 import { PLANS } from '../data/pricing';
+import { useInView } from '../hooks/useInView';
+
+const PLAN_DELAYS = ['', 'reveal-delay-2', 'reveal-delay-4'];
 
 export default function PricingPlans({ onOpenSignup, onOpenDemo }) {
   const [billing, setBilling] = useState('monthly');
   const isYearly = billing === 'yearly';
+  const [ref, inView] = useInView();
 
   const handleCta = (ctaAction) => {
     if (ctaAction === 'signup')  return onOpenSignup();
@@ -49,10 +53,10 @@ export default function PricingPlans({ onOpenSignup, onOpenDemo }) {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 items-stretch">
-          {PLANS.map((plan) => (
+        <div ref={ref} className="grid md:grid-cols-3 gap-8 items-stretch">
+          {PLANS.map((plan, i) => (
             plan.featured ? (
-              <div key={plan.id} className="bg-gradient-to-b from-teal-600 to-teal-700 rounded-2xl p-8 shadow-2xl md:scale-105 text-white">
+              <div key={plan.id} className={`reveal ${PLAN_DELAYS[i]} ${inView ? 'visible' : ''} bg-gradient-to-b from-teal-600 to-teal-700 rounded-2xl p-8 shadow-2xl md:scale-105 text-white`}>
                 <div className="flex flex-wrap gap-2 mb-4">
                   <span className="inline-block px-3 py-1 bg-white/20 text-white rounded-full text-xs font-bold">
                     {plan.badge}
@@ -93,7 +97,7 @@ export default function PricingPlans({ onOpenSignup, onOpenDemo }) {
                 </ul>
               </div>
             ) : (
-              <div key={plan.id} className="bg-white rounded-2xl border-2 border-gray-200 p-8 hover:shadow-lg transition">
+              <div key={plan.id} className={`reveal ${PLAN_DELAYS[i]} ${inView ? 'visible' : ''} bg-white rounded-2xl border-2 border-gray-200 p-8 hover:shadow-lg transition`}>
                 <div className="mb-6">
                   <h3 className="text-xl font-black text-gray-900 mb-1">{plan.name}</h3>
                   <p className="text-gray-500 text-sm">{plan.desc}</p>

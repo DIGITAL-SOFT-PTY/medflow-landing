@@ -1,4 +1,5 @@
 import React from 'react';
+import { useInView } from '../hooks/useInView';
 
 const BAR_DATA = [
   { month: 'Oct', value: 45, pct: 0.45 },
@@ -33,9 +34,11 @@ const KPI_STATS = [
 ];
 
 export default function ReportsSection() {
+  const [ref, inView] = useInView();
+
   return (
     <section id="reportes" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
+      <div ref={ref} className={`max-w-6xl mx-auto reveal ${inView ? 'visible' : ''}`}>
         <div className="text-center mb-14">
           <span className="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
             Reportes

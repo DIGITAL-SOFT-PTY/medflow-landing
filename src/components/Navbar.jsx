@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Activity, X, Menu } from 'lucide-react';
 import { scrollToSection } from '../utils/scroll';
 
@@ -7,11 +7,32 @@ const NAV_LINKS = [
   { label: 'Especialidades',  id: 'especialidades' },
   { label: 'Testimonios',     id: 'testimonios' },
   { label: 'Precios',         id: 'precios' },
+  { label: 'Reportes',        id: 'reportes' },
+  { label: 'Equipo',          id: 'equipo' },
   { label: 'FAQ',             id: 'faq' },
 ];
 
+const SPY_IDS = ['hero', 'caracteristicas', 'especialidades', 'testimonios', 'precios', 'reportes', 'equipo', 'faq'];
+
 export default function Navbar({ showBanner, setShowBanner, onOpenDemo }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection]   = useState('hero');
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { threshold: 0.35 }
+    );
+    SPY_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const handleNavClick = (id) => {
     scrollToSection(id);
@@ -51,12 +72,14 @@ export default function Navbar({ showBanner, setShowBanner, onOpenDemo }) {
         </button>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex gap-8 font-medium text-gray-600">
+        <div className="hidden md:flex gap-5 text-sm font-medium text-gray-600">
           {NAV_LINKS.map(({ label, id }) => (
             <button
               key={id}
               onClick={() => handleNavClick(id)}
-              className="hover:text-teal-600 transition"
+              className={`hover:text-teal-600 transition pb-0.5 border-b-2 ${
+                activeSection === id ? 'border-teal-600 text-teal-600' : 'border-transparent'
+              }`}
             >
               {label}
             </button>
@@ -74,7 +97,7 @@ export default function Navbar({ showBanner, setShowBanner, onOpenDemo }) {
           </a>
           <button
             onClick={onOpenDemo}
-            className="px-5 py-2 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition shadow-sm"
+            className="px-5 py-2 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition shadow-sm cursor-pointer"
           >
             Solicitar Demo
           </button>
@@ -94,19 +117,23 @@ export default function Navbar({ showBanner, setShowBanner, onOpenDemo }) {
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-100">
-          <div className="px-4 py-4 space-y-2">
+          <div className="px-4 py-4 space-y-1">
             {NAV_LINKS.map(({ label, id }) => (
               <button
                 key={id}
                 onClick={() => handleNavClick(id)}
-                className="block w-full text-left px-4 py-2.5 text-gray-700 hover:bg-teal-50 hover:text-teal-700 rounded-lg transition"
+                className={`block w-full text-left px-4 py-2.5 rounded-lg transition text-sm ${
+                  activeSection === id
+                    ? 'bg-teal-50 text-teal-700 font-semibold'
+                    : 'text-gray-700 hover:bg-teal-50 hover:text-teal-700'
+                }`}
               >
                 {label}
               </button>
             ))}
             <button
               onClick={() => { onOpenDemo(); setMobileMenuOpen(false); }}
-              className="w-full mt-2 px-6 py-2.5 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition"
+              className="w-full mt-2 px-6 py-2.5 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition cursor-pointer"
             >
               Solicitar Demo
             </button>

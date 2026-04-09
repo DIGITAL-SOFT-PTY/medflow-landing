@@ -1,8 +1,13 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { TESTIMONIALS } from '../data/testimonials';
+import { useInView } from '../hooks/useInView';
+
+const DELAYS = ['', 'reveal-delay-2', 'reveal-delay-4'];
 
 export default function TestimonialsSection() {
+  const [ref, inView] = useInView();
+
   return (
     <section id="testimonios" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white">
       <div className="max-w-6xl mx-auto">
@@ -14,9 +19,9 @@ export default function TestimonialsSection() {
           <p className="text-gray-400 text-lg">Más de 500 clínicas activas comparten su experiencia con MedFlow.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {TESTIMONIALS.map((t) => (
-            <article key={t.name} className="bg-gray-800 rounded-xl p-7 border border-gray-700 hover:border-teal-500 transition flex flex-col">
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          {TESTIMONIALS.map((t, i) => (
+            <article key={t.name} className={`reveal ${DELAYS[i]} ${inView ? 'visible' : ''} bg-gray-800 rounded-xl p-7 border border-gray-700 hover:border-teal-500 transition flex flex-col`}>
               {/* Avatar con iniciales + metric chip */}
               <div className="flex items-center gap-4 mb-4">
                 <div className={`w-14 h-14 bg-gradient-to-br ${t.gradientClass} rounded-full flex items-center justify-center flex-shrink-0 shadow-lg`}>
@@ -45,7 +50,7 @@ export default function TestimonialsSection() {
           ))}
 
           {/* Caso de éxito teaser */}
-          <div className="bg-gradient-to-br from-teal-900 to-teal-800 rounded-xl p-7 border border-teal-700 hover:border-teal-400 transition flex flex-col justify-between">
+          <div className={`reveal reveal-delay-6 ${inView ? 'visible' : ''} bg-gradient-to-br from-teal-900 to-teal-800 rounded-xl p-7 border border-teal-700 hover:border-teal-400 transition flex flex-col justify-between`}>
             <div>
               <span className="inline-block px-2 py-0.5 bg-teal-700 text-teal-200 rounded text-xs font-bold uppercase tracking-wide mb-4">
                 Caso de éxito

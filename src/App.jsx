@@ -21,6 +21,8 @@ import Footer              from './components/Footer';
 import SignupModal         from './components/SignupModal';
 import DemoModal           from './components/DemoModal';
 import WhatsAppButton      from './components/WhatsAppButton';
+import ScrollToTop         from './components/ScrollToTop';
+import StickyMobileCTA     from './components/StickyMobileCTA';
 
 export default function MedFlowLanding() {
   const [showBanner, setShowBanner] = useState(true);
@@ -67,6 +69,8 @@ export default function MedFlowLanding() {
       <SignupModal show={showSignupModal} onClose={closeSignupModal} />
       <DemoModal   show={showDemoModal}   onClose={closeDemoModal} />
       <WhatsAppButton />
+      <ScrollToTop />
+      <StickyMobileCTA onOpenSignup={openSignupModal} onOpenDemo={openDemoModal} />
     </div>
   );
 }

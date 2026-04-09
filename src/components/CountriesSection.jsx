@@ -1,4 +1,5 @@
 import React from 'react';
+import { useInView } from '../hooks/useInView';
 
 const COUNTRIES = [
   { code: 'pa', name: 'Panamá' },
@@ -14,9 +15,11 @@ const COUNTRIES = [
 ];
 
 export default function CountriesSection() {
+  const [ref, inView] = useInView();
+
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="max-w-5xl mx-auto">
+      <div ref={ref} className={`max-w-5xl mx-auto reveal ${inView ? 'visible' : ''}`}>
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">
             Presente en toda Latinoamérica

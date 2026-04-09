@@ -1,8 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useInView } from '../hooks/useInView';
 
 export default function ROICalculator({ onOpenSignup }) {
   const [patientsPerDay, setPatientsPerDay] = useState(20);
+  const [ref, inView] = useInView();
 
   const { savedHours, extraAppointments, extraRevenue } = useMemo(() => {
     const savedHours       = Math.round(patientsPerDay * 6 * 22 / 60);
@@ -25,7 +27,7 @@ export default function ROICalculator({ onOpenSignup }) {
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-teal-50 to-cyan-50">
-      <div className="max-w-3xl mx-auto">
+      <div ref={ref} className={`max-w-3xl mx-auto reveal ${inView ? 'visible' : ''}`}>
         <div className="text-center mb-10">
           <span className="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
             Calculadora ROI
