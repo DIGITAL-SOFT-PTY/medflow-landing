@@ -2,9 +2,9 @@ import React from 'react';
 import { Check, Activity, Heart, ArrowRight, Stethoscope } from 'lucide-react';
 
 const APPOINTMENTS = [
-  { name: 'Clínica San Miguel',    type: 'Pediatría',         time: '10:00', color: 'teal' },
-  { name: 'Clínica Dental Plus',   type: 'Odontología',       time: '11:30', color: 'green' },
-  { name: 'Centro Médico Aurora',  type: 'Medicina General',  time: '14:00', color: 'orange' },
+  { name: 'Clínica San Miguel',   type: 'Pediatría',        time: '10:00', color: 'teal' },
+  { name: 'Clínica Dental Plus',  type: 'Odontología',      time: '11:30', color: 'green' },
+  { name: 'Centro Médico Aurora', type: 'Medicina General', time: '14:00', color: 'orange' },
 ];
 
 const APPT_COLORS = {
@@ -16,7 +16,11 @@ const APPT_COLORS = {
 const HERO_BULLETS = [
   'Prueba gratis 14 días — Sin tarjeta de crédito',
   'Implementación en menos de 5 minutos',
-  '+500 clínicas activas en Panamá y Latinoamérica',
+  '+500 clínicas activas en 10 países latinoamericanos',
+];
+
+const CLIENT_LOGOS = [
+  'Clínica Vida', 'Dental Plus', 'Centro Aurora', 'MediSalud', 'ClínicaMed',
 ];
 
 export default function HeroBanner({ showBanner, onOpenSignup, onOpenDemo }) {
@@ -35,16 +39,17 @@ export default function HeroBanner({ showBanner, onOpenSignup, onOpenDemo }) {
           <div className="space-y-7">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-bold">
               <Activity className="w-4 h-4" />
-              Solución N°1 para clínicas en Latinoamérica
+              Software médico #1 en Panamá · 500+ clínicas activas
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 leading-tight">
-              El sistema que tu clínica merece
+              Tu clínica organizada,{' '}
+              <span className="text-teal-600">en 5 minutos</span>
             </h1>
 
             <p className="text-xl text-gray-600 leading-relaxed">
-              MedFlow digitaliza y automatiza la gestión de tu clínica: pacientes, citas, cobros,
-              historial clínico y reportes — todo en un solo lugar.
+              Agenda inteligente, expedientes digitales y cobros automáticos — sin papeles, sin caos, sin técnicos.
+              Diseñado para médicos en Latinoamérica.
             </p>
 
             <div className="space-y-3">
@@ -75,7 +80,22 @@ export default function HeroBanner({ showBanner, onOpenSignup, onOpenDemo }) {
 
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <Heart className="w-4 h-4 text-red-400" />
-              <span>4.9/5 estrellas — Soporte médico en español 24/7</span>
+              <span>⭐⭐⭐⭐⭐ 4.9/5 · Más de 200 reseñas verificadas · Soporte en español 24/7</span>
+            </div>
+
+            {/* Fila de logos de clientes */}
+            <div>
+              <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-3">Confían en nosotros</p>
+              <div className="flex flex-wrap gap-2">
+                {CLIENT_LOGOS.map((name) => (
+                  <span
+                    key={name}
+                    className="px-3 py-1.5 bg-gray-100 text-gray-500 rounded-lg text-xs font-semibold"
+                  >
+                    {name}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -89,11 +109,17 @@ export default function HeroBanner({ showBanner, onOpenSignup, onOpenDemo }) {
                 <div className="flex items-center gap-2 text-white font-semibold">
                   <Stethoscope className="w-5 h-5" />
                   <span>Panel Clínico — Hoy</span>
+                  {/* Pulso "en vivo" */}
+                  <span className="relative flex h-2.5 w-2.5 ml-1">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+                  </span>
                 </div>
                 <span className="text-teal-200 text-sm">{today}</span>
               </div>
 
-              <div className="p-5 space-y-5">
+              <div className="p-5 space-y-4">
+                {/* Stats rápidas */}
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center p-3 bg-teal-50 rounded-lg border border-teal-100">
                     <p className="text-2xl font-black text-teal-700">12</p>
@@ -109,8 +135,9 @@ export default function HeroBanner({ showBanner, onOpenSignup, onOpenDemo }) {
                   </div>
                 </div>
 
+                {/* Próximas citas */}
                 <div>
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Próximas citas</p>
+                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Próximas citas</p>
                   <div className="space-y-2">
                     {APPOINTMENTS.map((appt) => {
                       const c = APPT_COLORS[appt.color];
@@ -125,6 +152,14 @@ export default function HeroBanner({ showBanner, onOpenSignup, onOpenDemo }) {
                       );
                     })}
                   </div>
+                </div>
+
+                {/* Notificación de automatización */}
+                <div className="flex items-center gap-2 px-3 py-2 bg-green-50 border border-green-100 rounded-lg">
+                  <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                  </div>
+                  <p className="text-xs text-green-700 font-medium">Recordatorio enviado automáticamente a Juan R.</p>
                 </div>
               </div>
             </div>

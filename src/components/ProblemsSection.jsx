@@ -23,7 +23,7 @@ const PROBLEMS = [
   {
     Icon: Clock,         iconColor: 'text-purple-500', bg: 'bg-purple-50  border-purple-100',
     title: 'Horas en administración',
-    problem: '2-3 horas diarias en tareas que no son atención médica.',
+    problem: 'El médico promedio pierde 2.5 horas al día en papeleo, llamadas y cobros manuales.',
     solution: 'Todo automatizado. Solo 10 minutos de gestión al día.',
   },
   {
@@ -35,7 +35,7 @@ const PROBLEMS = [
   {
     Icon: Users,         iconColor: 'text-teal-500',   bg: 'bg-teal-50    border-teal-100',
     title: 'Sala de espera caótica',
-    problem: 'Pacientes sin orden, esperas sin información, recepción desbordada.',
+    problem: 'Pacientes que no saben cuánto esperar, recepciones colapsadas, primeras impresiones arruinadas.',
     solution: 'Sistema de turnos y sala de espera digital.',
   },
 ];
@@ -45,8 +45,8 @@ export default function ProblemsSection() {
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-14">
-          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Problemas que resolvemos</h2>
-          <p className="text-xl text-gray-500">Cada día en tu clínica, nosotros los eliminamos.</p>
+          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">¿Te suena familiar?</h2>
+          <p className="text-xl text-gray-500">Estos son los problemas más comunes en clínicas de Latinoamérica. MedFlow los resuelve desde el día 1.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

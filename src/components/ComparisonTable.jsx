@@ -8,6 +8,8 @@ const ROWS = [
   ['Reportes en tiempo real',     true,      false,     'partial'],
   ['Soporte en español 24/7',     true,      false,     false],
   ['Implementación en 5 min',     true,      true,      false],
+  ['App móvil incluida',          true,      false,     false],
+  ['Precio público sin contrato', true,      true,      false],
   ['Precio mensual',              '$29',     'Gratis',  '$200+'],
 ];
 
@@ -18,7 +20,7 @@ function Cell({ val }) {
   return <span className="font-bold text-gray-700">{val}</span>;
 }
 
-export default function ComparisonTable() {
+export default function ComparisonTable({ onOpenSignup }) {
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-5xl mx-auto">
@@ -41,7 +43,7 @@ export default function ComparisonTable() {
                   </span>
                 </th>
                 <th className="px-6 py-4 text-center font-semibold text-gray-500">Excel</th>
-                <th className="px-6 py-4 text-center font-semibold text-gray-500">Software tradicional</th>
+                <th className="px-6 py-4 text-center font-semibold text-gray-500">Sistema instalado (Mediline, etc.)</th>
               </tr>
             </thead>
             <tbody>
@@ -53,6 +55,18 @@ export default function ComparisonTable() {
                   <td className="px-6 py-4 text-center"><Cell val={trad} /></td>
                 </tr>
               ))}
+              {/* CTA row */}
+              <tr className="bg-teal-600">
+                <td className="px-6 py-4 text-white font-bold">MedFlow · Desde $29/mes · Sin contrato · 14 días gratis</td>
+                <td colSpan={3} className="px-6 py-4 text-center">
+                  <button
+                    onClick={onOpenSignup}
+                    className="px-6 py-2 bg-white text-teal-700 font-bold rounded-lg hover:bg-teal-50 transition text-sm cursor-pointer"
+                  >
+                    Comenzar ahora →
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

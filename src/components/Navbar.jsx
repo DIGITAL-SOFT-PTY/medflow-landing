@@ -5,6 +5,7 @@ import { scrollToSection } from '../utils/scroll';
 const NAV_LINKS = [
   { label: 'Características', id: 'caracteristicas' },
   { label: 'Especialidades',  id: 'especialidades' },
+  { label: 'Testimonios',     id: 'testimonios' },
   { label: 'Precios',         id: 'precios' },
   { label: 'FAQ',             id: 'faq' },
 ];
@@ -22,7 +23,7 @@ export default function Navbar({ showBanner, setShowBanner, onOpenDemo }) {
       {showBanner && (
         <div className="bg-gradient-to-r from-teal-600 to-teal-700 text-white text-center py-2 px-10 text-sm font-medium relative">
           🎉 Oferta de lanzamiento —{' '}
-          <span className="font-bold">30% off los primeros 3 meses</span> · Termina el 30 Abr
+          <span className="font-bold">30% off los primeros 3 meses</span> · Solo para las próximas 20 clínicas
           <button
             onClick={() => setShowBanner(false)}
             aria-label="Cerrar banner de oferta"

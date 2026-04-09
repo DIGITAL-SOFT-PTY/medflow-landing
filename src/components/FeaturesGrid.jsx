@@ -10,9 +10,9 @@ export default function FeaturesGrid() {
             Funcionalidades
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
-            Todo lo que necesita tu clínica
+            8 herramientas que trabajan por ti
           </h2>
-          <p className="text-xl text-gray-500">Sin módulos innecesarios. Sin curva de aprendizaje larga.</p>
+          <p className="text-xl text-gray-500">Todo integrado. Aprenderás en una tarde. Lo usarás por años.</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
