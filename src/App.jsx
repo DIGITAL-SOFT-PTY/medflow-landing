@@ -48,8 +48,8 @@ export default function MedFlowLanding() {
       <SpecialtiesSection />
       <ProblemsSection />
       <FeaturesGrid />
-      <ComparisonTable />
-      <ROICalculator />
+      <ComparisonTable onOpenSignup={openSignupModal} />
+      <ROICalculator   onOpenSignup={openSignupModal} />
       <ReportsSection />
       <TestimonialsSection />
 

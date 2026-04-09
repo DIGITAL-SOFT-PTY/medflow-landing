@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
+import { ArrowRight } from 'lucide-react';
 
-export default function ROICalculator() {
+export default function ROICalculator({ onOpenSignup }) {
   const [patientsPerDay, setPatientsPerDay] = useState(20);
 
   const { savedHours, extraAppointments, extraRevenue } = useMemo(() => {
@@ -73,6 +74,20 @@ export default function ROICalculator() {
           <p className="text-center text-xs text-gray-400 mt-6">
             * Estimación basada en reducción del 75% del tiempo administrativo promedio.
           </p>
+
+          {/* Contextual CTA */}
+          <div className="mt-6 p-5 bg-teal-50 border border-teal-100 rounded-xl text-center">
+            <p className="text-gray-700 text-sm mb-3">
+              Con <span className="font-black text-teal-700">${extraRevenue}</span> de ingreso extra potencial al mes,
+              MedFlow se paga solo en el primer día.
+            </p>
+            <button
+              onClick={onOpenSignup}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition cursor-pointer"
+            >
+              Comenzar gratis <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
     </section>

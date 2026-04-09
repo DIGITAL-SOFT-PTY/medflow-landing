@@ -1,14 +1,14 @@
 import { Users, Calendar, DollarSign, BarChart3, FileText, Activity, Shield, Zap } from 'lucide-react';
 
 export const FEATURES = [
-  { Icon: Users,       color: 'teal',   title: 'Gestión de Pacientes', desc: 'Expediente digital, historial completo, búsqueda rápida por nombre o cédula.' },
-  { Icon: Calendar,    color: 'cyan',   title: 'Agenda Inteligente',    desc: 'Citas automáticas, bloqueos de horario, recordatorios por SMS y email.' },
-  { Icon: DollarSign,  color: 'green',  title: 'Cobros y Recibos',      desc: 'Genera recibos en segundos, controla deudas y exporta reportes.' },
-  { Icon: BarChart3,   color: 'blue',   title: 'Reportes Diarios',      desc: 'Dashboard con métricas de ingresos, atenciones y tendencias.' },
-  { Icon: FileText,    color: 'indigo', title: 'Notas Clínicas',        desc: 'Anamnesis, diagnósticos y recetas en un flujo rápido y estructurado.' },
-  { Icon: Activity,    color: 'rose',   title: 'Sala de Espera',        desc: 'Turnos digitales con pantalla de llamada para recepción.' },
-  { Icon: Shield,      color: 'amber',  title: 'Seguridad Médica',      desc: 'Encriptación de nivel bancario y backups automáticos diarios.' },
-  { Icon: Zap,         color: 'purple', title: 'Soporte 24/7',          desc: 'Chat en vivo y teléfono. Siempre en español, siempre disponible.' },
+  { Icon: Users,       color: 'teal',   title: 'Gestión de Pacientes', desc: 'Encuentra cualquier paciente en 2 segundos. Historial, alergias y visitas anteriores al instante.' },
+  { Icon: Calendar,    color: 'cyan',   title: 'Agenda Inteligente',    desc: 'Elimina las ausencias: los recordatorios automáticos reducen el no-show hasta un 65%.' },
+  { Icon: DollarSign,  color: 'green',  title: 'Cobros y Recibos',      desc: 'Cobra más rápido y cobra todo. Recibos en 1 clic, control de deudas, cero facturas perdidas.' },
+  { Icon: BarChart3,   color: 'blue',   title: 'Reportes Diarios',      desc: 'Abre tu día sabiendo exactamente cuánto facturaste ayer y qué te espera hoy.' },
+  { Icon: FileText,    color: 'indigo', title: 'Notas Clínicas',        desc: 'Notas clínicas en la mitad del tiempo. Plantillas por especialidad, recetas digitales incluidas.' },
+  { Icon: Activity,    color: 'rose',   title: 'Sala de Espera',        desc: 'Recepción sin caos: pantalla digital de turnos, pacientes informados, recepcionista tranquila.' },
+  { Icon: Shield,      color: 'amber',  title: 'Seguridad Médica',      desc: 'Datos de tus pacientes protegidos como en un banco. Copias automáticas diarias, nunca pierdas nada.' },
+  { Icon: Zap,         color: 'purple', title: 'Soporte 24/7',          desc: 'Nuestro equipo habla tu idioma — español, 24 horas, 7 días. Un humano real, no un bot.' },
 ];
 
 export const FEATURE_COLOR_MAP = {
