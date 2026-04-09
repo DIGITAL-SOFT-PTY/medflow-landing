@@ -23,4 +23,20 @@ export const FAQ_ITEMS = [
     q: '¿Necesito firmar contratos largos?',
     a: 'No. Todo es mes a mes. No creemos en retener clientes con contratos. Tu permanencia se gana con el servicio.',
   },
+  {
+    q: '¿Cuántos usuarios puede tener mi equipo?',
+    a: 'El plan Emprendedor incluye hasta 3 usuarios (médico + recepcionista + asistente). El plan Profesional incluye usuarios ilimitados.',
+  },
+  {
+    q: '¿Funciona en celular o solo en computadora?',
+    a: 'MedFlow funciona en cualquier dispositivo desde el navegador — celular, tablet o computadora. Sin instalaciones. Muchos médicos lo usan desde su teléfono entre consultas.',
+  },
+  {
+    q: '¿Hay capacitación o soporte de onboarding?',
+    a: 'Sí. Al registrarte recibes videotutoriales y una sesión gratuita de onboarding de 30 minutos con nuestro equipo. La mayoría de clínicas está operativa el mismo día.',
+  },
+  {
+    q: '¿Cuánto cuesta realmente? ¿Hay cobros ocultos?',
+    a: 'El precio que ves es el que pagas — sin cobros por usuario en el plan Profesional, sin tarifas de implementación, sin cargos por soporte. Solo pagas el plan mensual o anual.',
+  },
 ];

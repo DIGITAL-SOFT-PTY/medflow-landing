@@ -12,7 +12,7 @@ export default function FAQSection() {
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-14">
           <h2 className="text-4xl font-black text-gray-900 mb-4">Preguntas frecuentes</h2>
-          <p className="text-gray-500 text-lg">Respuestas directas a tus dudas.</p>
+          <p className="text-gray-500 text-lg">Respuestas directas. ¿Tienes otra duda? Escríbenos por WhatsApp — respondemos en minutos.</p>
         </div>
 
         <div className="space-y-3">
