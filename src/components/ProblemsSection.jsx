@@ -1,5 +1,8 @@
 import React from 'react';
 import { Check, ClipboardList, Calendar, DollarSign, Clock, BarChart3, Users } from 'lucide-react';
+import { useInView } from '../hooks/useInView';
+
+const DELAYS = ['', 'reveal-delay-1', 'reveal-delay-2', '', 'reveal-delay-1', 'reveal-delay-2'];
 
 const PROBLEMS = [
   {
@@ -41,6 +44,8 @@ const PROBLEMS = [
 ];
 
 export default function ProblemsSection() {
+  const [ref, inView] = useInView();
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-6xl mx-auto">
@@ -49,9 +54,9 @@ export default function ProblemsSection() {
           <p className="text-xl text-gray-500">Estos son los problemas más comunes en clínicas de Latinoamérica. MedFlow los resuelve desde el día 1.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {PROBLEMS.map(({ Icon, iconColor, bg, title, problem, solution }) => (
-            <div key={title} className={`bg-white rounded-xl p-7 border ${bg} hover:shadow-lg transition`}>
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {PROBLEMS.map(({ Icon, iconColor, bg, title, problem, solution }, i) => (
+            <div key={title} className={`reveal ${DELAYS[i]} ${inView ? 'visible' : ''} bg-white rounded-xl p-7 border ${bg} hover:shadow-lg transition`}>
               <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4 ${bg}`}>
                 <Icon className={`w-8 h-8 ${iconColor}`} />
               </div>

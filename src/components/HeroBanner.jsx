@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Check, Activity, Heart, ArrowRight, Stethoscope } from 'lucide-react';
 
-const APPOINTMENTS = [
-  { name: 'Clínica San Miguel',   type: 'Pediatría',        time: '10:00', color: 'teal' },
-  { name: 'Clínica Dental Plus',  type: 'Odontología',      time: '11:30', color: 'green' },
-  { name: 'Centro Médico Aurora', type: 'Medicina General', time: '14:00', color: 'orange' },
-];
+function getRelativeTime(offsetMinutes) {
+  const d = new Date(Date.now() + offsetMinutes * 60_000);
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
 
 const APPT_COLORS = {
   teal:   { wrap: 'bg-teal-50   border-teal-500',   text: 'text-teal-600' },
@@ -24,6 +23,12 @@ const CLIENT_LOGOS = [
 ];
 
 export default function HeroBanner({ showBanner, onOpenSignup, onOpenDemo }) {
+  const appointments = useMemo(() => [
+    { name: 'Clínica San Miguel',   type: 'Pediatría',        time: getRelativeTime(20), color: 'teal' },
+    { name: 'Clínica Dental Plus',  type: 'Odontología',      time: getRelativeTime(45), color: 'green' },
+    { name: 'Centro Médico Aurora', type: 'Medicina General', time: getRelativeTime(80), color: 'orange' },
+  ], []);
+
   const today = new Date().toLocaleDateString('es-PA', {
     weekday: 'long', day: 'numeric', month: 'short', year: 'numeric',
   });
@@ -139,7 +144,7 @@ export default function HeroBanner({ showBanner, onOpenSignup, onOpenDemo }) {
                 <div>
                   <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Próximas citas</p>
                   <div className="space-y-2">
-                    {APPOINTMENTS.map((appt) => {
+                    {appointments.map((appt) => {
                       const c = APPT_COLORS[appt.color];
                       return (
                         <div key={appt.name} className={`flex items-center justify-between p-3 rounded-lg border-l-4 ${c.wrap}`}>

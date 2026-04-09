@@ -2,6 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Stethoscope, X } from 'lucide-react';
 import { useEmailForm } from '../hooks/useEmailForm';
 
+function Spinner() {
+  return (
+    <span className="flex items-center justify-center gap-2">
+      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+      </svg>
+      Enviando...
+    </span>
+  );
+}
+
 export default function DemoModal({ show, onClose }) {
   const [demoName,  setDemoName]  = useState('');
   const [demoEmail, setDemoEmail] = useState('');
@@ -18,14 +30,10 @@ export default function DemoModal({ show, onClose }) {
     })
   );
 
-  // Focus first input when modal opens
   useEffect(() => {
-    if (show) {
-      setTimeout(() => firstInputRef.current?.focus(), 50);
-    }
+    if (show) setTimeout(() => firstInputRef.current?.focus(), 300);
   }, [show]);
 
-  // Close on Escape
   useEffect(() => {
     if (!show) return;
     const handleKey = (e) => { if (e.key === 'Escape') handleClose(); };
@@ -41,21 +49,24 @@ export default function DemoModal({ show, onClose }) {
     onClose();
   };
 
-  const handleSubmit = (e) => {
-    send(e, { demoName, demoEmail, demoPhone });
-  };
-
-  if (!show) return null;
+  const handleSubmit = (e) => { send(e, { demoName, demoEmail, demoPhone }); };
 
   return (
     <div
       role="dialog"
       aria-modal="true"
       aria-labelledby="demo-modal-title"
-      className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4"
-      onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
+      className={`fixed inset-0 z-[100] flex items-center justify-center p-4 transition-all duration-300 ${
+        show ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      }`}
     >
-      <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div
+        className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${show ? 'opacity-100' : 'opacity-0'}`}
+        onClick={handleClose}
+      />
+      <div className={`relative bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto transition-all duration-300 ${
+        show ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'
+      }`}>
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center" aria-hidden="true">
@@ -76,7 +87,7 @@ export default function DemoModal({ show, onClose }) {
             <p className="text-4xl mb-4">📅</p>
             <p className="text-teal-700 font-bold text-lg mb-2">¡Demo agendada!</p>
             <p className="text-gray-500 text-sm">Te contactaremos pronto para confirmar la fecha y hora.</p>
-            <button onClick={handleClose} className="mt-6 px-6 py-2 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition">
+            <button onClick={handleClose} className="mt-6 px-6 py-2 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition cursor-pointer">
               Entendido
             </button>
           </div>
@@ -123,7 +134,7 @@ export default function DemoModal({ show, onClose }) {
               disabled={isLoading}
               className="w-full py-3 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Enviando...' : 'Confirmar Demo'}
+              {isLoading ? <Spinner /> : 'Confirmar Demo'}
             </button>
             {errorMessage && <p role="alert" className="text-red-600 text-center text-sm">{errorMessage}</p>}
           </form>

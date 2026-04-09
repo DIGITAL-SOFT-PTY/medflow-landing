@@ -1,4 +1,5 @@
 import React from 'react';
+import { useInView } from '../hooks/useInView';
 
 const ROWS = [
   ['Agenda digital inteligente',  true,      false,     'partial'],
@@ -21,9 +22,11 @@ function Cell({ val }) {
 }
 
 export default function ComparisonTable({ onOpenSignup }) {
+  const [ref, inView] = useInView();
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-5xl mx-auto">
+      <div ref={ref} className={`max-w-5xl mx-auto reveal ${inView ? 'visible' : ''}`}>
         <div className="text-center mb-14">
           <span className="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
             Comparación

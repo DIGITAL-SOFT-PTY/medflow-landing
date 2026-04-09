@@ -1,5 +1,6 @@
 import React from 'react';
 import { UserPlus, Upload, LayoutDashboard } from 'lucide-react';
+import { useInView } from '../hooks/useInView';
 
 const STEPS = [
   {
@@ -25,7 +26,11 @@ const STEPS = [
   },
 ];
 
+const DELAYS = ['', 'reveal-delay-2', 'reveal-delay-4'];
+
 export default function HowItWorks() {
+  const [ref, inView] = useInView();
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-5xl mx-auto">
@@ -39,10 +44,10 @@ export default function HowItWorks() {
           <p className="text-xl text-gray-500">Sin instalaciones. Sin técnicos. Sin complicaciones.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
           <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-0.5 bg-teal-100 z-0" aria-hidden="true" />
-          {STEPS.map(({ step, Icon, title, desc, timing }) => (
-            <div key={step} className="relative z-10 flex flex-col items-center text-center bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-lg hover:border-teal-200 transition">
+          {STEPS.map(({ step, Icon, title, desc, timing }, i) => (
+            <div key={step} className={`reveal ${DELAYS[i]} ${inView ? 'visible' : ''} relative z-10 flex flex-col items-center text-center bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-lg hover:border-teal-200 transition`}>
               <div className="w-14 h-14 bg-teal-600 text-white rounded-2xl flex items-center justify-center mb-4 shadow-md" aria-hidden="true">
                 <Icon className="w-7 h-7" />
               </div>
